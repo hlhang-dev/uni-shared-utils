@@ -1,0 +1,31 @@
+{
+  "name": "uni-shared-utils",
+  "version": "2.0.0",
+  "description": "uni app shared utils",
+  "main": "src/index.ts",
+  "author": "hlhang",
+  "license": "ISC",
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "uniapp",
+    "Utils"
+  ],
+  "scripts": {
+    "publish": "npm publish"
+  },
+  "devDependencies": {
+    "@dcloudio/types": "^3.0.14",
+    "@dcloudio/uni-automator": "3.0.0-alpha-3060420220922001",
+    "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060420220922001",
+    "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060420220922001",
+    "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060420220922001",
+    "vite": "^2.9.14"
+  },
+  "dependencies": {
+    "json2typescript": "^1.5.1",
+    "ts-dev-common-utils": "^1.0.0",
+    "tslib": "^2.4.1"
+  }
+}
