@@ -1,4 +1,5 @@
 import { StatusNavHeightVO } from '../beans/wx/StatusNavHeightVO'
+import { ChooseAddressRes, ChooseLocationSuccess, GetLocationSuccess } from '../definition/wechat/WxOpenType'
 import { LoadingManagement } from './LoadingManagement'
 import MyResponseCodeEnum from '../definition/http/MyResponseCodeEnum'
 import ApiUnifiedVO from '../beans/http/vo/ApiUnifiedVO'
@@ -180,6 +181,39 @@ export class UniAppManagement {
             },
             fail: (result) => {
                 callback(false, RequestPaymentCode.FAILED)
+            }
+        })
+    }
+
+    public static doChooseLocation(callback: (success: boolean,choose: ChooseLocationSuccess) => void) {
+        uni.chooseLocation({
+            success: ((choose: ChooseLocationSuccess) => {
+                callback(true,choose)
+            }),
+            fail: (res) => {
+               callback(false,res)
+            }
+        })
+    }
+
+    public static getLocation(callback: (success: boolean, choose: GetLocationSuccess) => void) {
+        uni.getLocation({
+            success: (choose) => {
+                callback(true, choose)
+            },
+            fail: (result) => {
+                callback(false,result)
+            }
+        })
+    }
+
+    public static doChooseAddress(callback: (success: boolean,chooseAddress: ChooseAddressRes) => void) {
+        uni.chooseAddress({
+            success: ((choose) => {
+                callback(true,choose)
+            }),
+            fail: (result) => {
+                callback(false,result)
             }
         })
     }
