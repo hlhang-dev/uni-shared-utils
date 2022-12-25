@@ -40,6 +40,40 @@ export class UniAppManagement {
         })
     }
 
+    public static async doOpenSetting(withSubscriptions: boolean) {
+        uni.openSetting({
+            withSubscriptions: withSubscriptions
+        })
+    }
+
+    public static async getSetting(withSubscriptions: boolean, callback: (success: boolean, result: UniNamespace.GetSettingSuccessResult) => void) {
+        uni.getSetting({
+            withSubscriptions: withSubscriptions,
+            success: (result: UniNamespace.GetSettingSuccessResult) => {
+                callback(true, result)
+            },
+            fail: (error) => {
+                callback(false, error)
+            }
+        })
+    }
+
+    private static getEncryptionWenRunData(): Promise<UniApp.GetWeRunDataSuccessCallbackResult> {
+        return new Promise((resolve, reject) => {
+            uni.getWeRunData({
+                success: (weRunResult: UniApp.GetWeRunDataSuccessCallbackResult) => {
+                    resolve(weRunResult)
+                },
+                fail: (error) => {
+                    reject(error)
+                }
+            })
+        })
+    }
+
+
+    public static async
+
     public static async doPreviewImage(currentImage: string, imageUrls: string[]) {
         await uni.previewImage({
             current: currentImage,
@@ -185,13 +219,13 @@ export class UniAppManagement {
         })
     }
 
-    public static doChooseLocation(callback: (success: boolean,choose: ChooseLocationSuccess) => void) {
+    public static doChooseLocation(callback: (success: boolean, choose: ChooseLocationSuccess) => void) {
         uni.chooseLocation({
             success: ((choose: ChooseLocationSuccess) => {
-                callback(true,choose)
+                callback(true, choose)
             }),
             fail: (res) => {
-               callback(false,res)
+                callback(false, res)
             }
         })
     }
@@ -202,18 +236,18 @@ export class UniAppManagement {
                 callback(true, choose)
             },
             fail: (result) => {
-                callback(false,result)
+                callback(false, result)
             }
         })
     }
 
-    public static doChooseAddress(callback: (success: boolean,chooseAddress: ChooseAddressRes) => void) {
+    public static doChooseAddress(callback: (success: boolean, chooseAddress: ChooseAddressRes) => void) {
         uni.chooseAddress({
             success: ((choose) => {
-                callback(true,choose)
+                callback(true, choose)
             }),
             fail: (result) => {
-                callback(false,result)
+                callback(false, result)
             }
         })
     }
