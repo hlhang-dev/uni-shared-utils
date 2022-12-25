@@ -1,7 +1,7 @@
-lockfileVersion: 5.4
+lockfileVersion: 5.3
 
 specifiers:
-  '@dcloudio/types': ^3.0.14
+  '@dcloudio/types': 3.0.14
   '@dcloudio/uni-automator': 3.0.0-alpha-3060420220922001
   '@dcloudio/uni-cli-shared': 3.0.0-alpha-3060420220922001
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3060420220922001
@@ -17,7 +17,7 @@ dependencies:
   tslib: 2.4.1
 
 devDependencies:
-  '@dcloudio/types': 3.2.3
+  '@dcloudio/types': 3.0.14
   '@dcloudio/uni-automator': 3.0.0-alpha-3060420220922001
   '@dcloudio/uni-cli-shared': 3.0.0-alpha-3060420220922001
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3060420220922001
@@ -332,8 +332,8 @@ packages:
       to-fast-properties: 2.0.0
     dev: true
 
-  /@dcloudio/types/3.2.3:
-    resolution: {integrity: sha512-XnccbGXE0Lk9N3Vnaqs0Ugmra1dA+B9+7kN4ftgAF48xQMPrk7LdFdNuAHjHn/geh8VloPx8cUMGb/zqnQ0Ejg==}
+  /@dcloudio/types/3.0.14:
+    resolution: {integrity: sha512-WNVBTL4yn8a2cDp2YkVDhvBHIsw505HgY4lLILvzmUO9nFxidwJawXYAgE05lYidE4c62SRZSh9/gYF3eRtg1A==}
     dev: true
 
   /@dcloudio/uni-automator/3.0.0-alpha-3060420220922001:

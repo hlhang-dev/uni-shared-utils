@@ -21,6 +21,9 @@
       ]
 
     },
+    "types": [
+      "@dcloudio/types"
+    ],
     "lib": [
       "esnext",
       "dom",
