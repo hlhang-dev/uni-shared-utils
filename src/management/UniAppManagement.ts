@@ -12,6 +12,7 @@ import { JsApiPaymentDTO } from '../beans/payment/JsApiPaymentDTO'
 import { UniErrorMsgEnum } from '../definition/msg/UniErrorMsgEnum'
 import { RequestPaymentCode } from '../definition/coomon/RequestPaymentCode'
 import { MyJsonConverter } from 'ts-dev-common-utils'
+import { ShowNoticeManagement } from './ShowNoticeManagement'
 
 export class UniAppManagement {
     public static wxRequest<T>(url: string, method: string, data: object, timeout: number, callback: (requestCode: MyResponseCodeEnum, result?: ApiUnifiedVO) => void, headers: object = {}, showLoading: boolean = true, globalHeaders: object = {}) {
@@ -54,6 +55,17 @@ export class UniAppManagement {
             },
             fail: (error) => {
                 callback(false, error)
+            }
+        })
+    }
+
+    public static setClipboardData (data: string,isShowTips: boolean = true) {
+        uni.setClipboardData({
+            data: data,
+            success: () => {
+                if (isShowTips) {
+                    ShowNoticeManagement.showNormalNotice('复制成功')
+                }
             }
         })
     }
