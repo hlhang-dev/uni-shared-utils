@@ -120,7 +120,6 @@ export class UniAppManagement {
     }
 
 
-
     public static async doPreviewImage(currentImage: string, imageUrls: string[]) {
         await uni.previewImage({
             current: currentImage,
@@ -128,7 +127,7 @@ export class UniAppManagement {
         })
     }
 
-    public static async doClosePreviewImage () {
+    public static async doClosePreviewImage() {
         await uni.closePreviewImage({})
     }
 
@@ -328,5 +327,45 @@ export class UniAppManagement {
                 }
             }
         )
+    }
+
+
+    public static downloadFile(url: string, silent: boolean = false): Promise<string> {
+        return new Promise((resolve, reject) => {
+            if (!silent) {
+                LoadingManagement.getInstance().show()
+            }
+            uni.downloadFile({
+                url: url,
+                success: (result) => {
+                    resolve(result.tempFilePath)
+                },
+                fail: (result) => {
+                    reject(result)
+                },
+                complete: () => {
+                    LoadingManagement.getInstance().hide()
+                }
+            })
+        })
+    }
+
+    public static async openDocument(url: string,
+                                     showMenu: boolean = true,
+                                     silent: boolean = false) {
+        try {
+            if (!silent) LoadingManagement.getInstance().show()
+            const file = await UniAppManagement.downloadFile(url,true)
+            uni.openDocument({
+                filePath: file,
+                // @ts-ignore
+                showMenu: showMenu,
+                complete: () => {
+                    if (!silent) LoadingManagement.getInstance().hide()
+                }
+            })
+        } catch (e) {
+            ShowNoticeManagement.showNormalNotice('请检查网络设置')
+        }
     }
 }
