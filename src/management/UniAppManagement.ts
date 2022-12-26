@@ -59,7 +59,7 @@ export class UniAppManagement {
         })
     }
 
-    public static setClipboardData (data: string,isShowTips: boolean = true) {
+    public static setClipboardData(data: string, isShowTips: boolean = true) {
         uni.setClipboardData({
             data: data,
             success: () => {
@@ -70,7 +70,43 @@ export class UniAppManagement {
         })
     }
 
-    private static getEncryptionWenRunData(): Promise<UniApp.GetWeRunDataSuccessCallbackResult> {
+    public static chooseImage(count: number = 9,
+                              sizeType: string | string [] = ['original', 'compressed'],
+                              sourceType: string [] = ['album', 'camera'],
+                              crop?: UniApp.ChooseImageCropOptions,
+                              callback?: (success: boolean, result: UniApp.ChooseImageSuccessCallbackResult | any) => void) {
+        uni.chooseImage({
+            count: count,
+            sourceType: sourceType,
+            crop: crop,
+            success: (result) => {
+                if (callback) callback(true, result)
+            },
+            fail: (error) => {
+                if (callback) callback(false, error)
+            }
+        })
+    }
+
+    public static moveToOtherMiniProgram(appId: string,
+                                         envVersion: 'release' | 'develop' | 'trial' = 'trial',
+                                         path: string = '',
+                                         extraData: any = {},
+                                         callback?: (success: boolean) => void) {
+        uni.navigateToMiniProgram({
+            appId: appId,
+            path: path,
+            extraData: extraData,
+            success: () => {
+                if (callback) callback(true)
+            },
+            fail: () => {
+                if (callback) callback(false)
+            }
+        })
+    }
+
+    public static getEncryptionWenRunData(): Promise<UniApp.GetWeRunDataSuccessCallbackResult> {
         return new Promise((resolve, reject) => {
             uni.getWeRunData({
                 success: (weRunResult: UniApp.GetWeRunDataSuccessCallbackResult) => {
@@ -84,13 +120,16 @@ export class UniAppManagement {
     }
 
 
-    public static async
 
     public static async doPreviewImage(currentImage: string, imageUrls: string[]) {
         await uni.previewImage({
             current: currentImage,
             urls: imageUrls
         })
+    }
+
+    public static async doClosePreviewImage () {
+        await uni.closePreviewImage({})
     }
 
     public static getStatusNavHeight(callback: (success: boolean, statusNavHeightVO?: StatusNavHeightVO) => void) {
