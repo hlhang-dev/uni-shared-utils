@@ -70,11 +70,12 @@ export class UniAppManagement {
         })
     }
 
-    public static chooseImage(count: number = 9,
+    public static chooseImage(callback?: (success: boolean, result: UniApp.ChooseImageSuccessCallbackResult) => void,
+                              count: number = 9,
                               sizeType: string | string [] = ['original', 'compressed'],
                               sourceType: string [] = ['album', 'camera'],
                               crop?: UniApp.ChooseImageCropOptions,
-                              callback?: (success: boolean, result: UniApp.ChooseImageSuccessCallbackResult | any) => void) {
+    ) {
         uni.chooseImage({
             count: count,
             sourceType: sourceType,
@@ -355,7 +356,7 @@ export class UniAppManagement {
                                      silent: boolean = false) {
         try {
             if (!silent) LoadingManagement.getInstance().show()
-            const file = await UniAppManagement.downloadFile(url,true)
+            const file = await UniAppManagement.downloadFile(url, true)
             uni.openDocument({
                 filePath: file,
                 // @ts-ignore
