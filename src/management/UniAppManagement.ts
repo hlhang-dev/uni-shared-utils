@@ -24,6 +24,7 @@ export class UniAppManagement {
             method: <'OPTIONS' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'TRACE' | 'CONNECT'>method,
             header: UniUtils.buildHeader(headers, globalHeaders),
             data: data,
+            sslVerify: false,
             timeout: timeout,
             success: (res) => {
                 const result = MyJsonConverter.getInstance().deserializeObject(res, ApiUnifiedVO)

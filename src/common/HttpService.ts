@@ -74,9 +74,23 @@ export class HttpService {
     }
   }
 
+  private static isCanShowExpiredLoginModel() {
+    return HttpService.ANTI_SHAKE_COUNTER === 1
+  }
+
+
   private static onNoPermission() {
     HttpService.ANTI_SHAKE_COUNTER += 1
     TokenManagement.getInstance().removeAccountToken()
+    if (HttpService.isCanShowExpiredLoginModel()) {
+      const title: string = LoginManagement.getInstance().isAccountLogin() ? Lang.LOGIN_BE_OVERDUE_NOTICE: Lang.LOGIN_NOTICE
+      const content: string = LoginManagement.getInstance().isAccountLogin() ? Lang.LOGIN_BE_OVERDUE: Lang.NOT_LOGGED_IN
+      UniAppManagement.doShowModal(title, content, false, HttpService.onLoginBeOverdueCallback)
+    }
+  }
+
+  private static onLoginBeOverdueCallback () {
+    PageManagement.navigateToPage(HttpService.LOGIN_PAGE, undefined, HttpService.onMoveToLoginPageSuccess)
   }
 
   private static onMoveToLoginPageSuccess() {
