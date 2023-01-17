@@ -42,6 +42,43 @@ export class UniAppManagement {
         })
     }
 
+    public static showActionSheet(itemList: string[], callback: (success: boolean, index: number) => void, title: string = '') {
+        uni.showActionSheet({
+            itemList: itemList,
+            title: title,
+            success: (result) => {
+                callback(true, result.tapIndex)
+            },
+            fail: (error) => {
+                callback(false, -1)
+            }
+        })
+    }
+
+    public static pageScrollTo(scrollTop: number = 0, selector: string = '',duration: number = 300) {
+        uni.pageScrollTo({
+            scrollTop: scrollTop,
+            selector: selector,
+            duration: duration
+        })
+    }
+
+    public static showShareMenu(menus: UniApp.ShowShareMenuOptionsMenu[] = ['shareAppMessage', 'shareTimeline'], callback?: (success: boolean) => void) {
+        uni.showShareMenu({
+            menus: menus,
+            success: () => {
+                if (callback) {
+                    callback(true)
+                }
+            },
+            fail: () => {
+                if (callback) {
+                    callback(false)
+                }
+            }
+        })
+    }
+
     public static async doOpenSetting(withSubscriptions: boolean) {
         uni.openSetting({
             withSubscriptions: withSubscriptions
