@@ -170,6 +170,12 @@ export class UniAppManagement {
         await uni.closePreviewImage({})
     }
 
+    public static async makePhoneCall(phone: string) {
+        uni.makePhoneCall({
+            phoneNumber: phone
+        })
+    }
+
     public static getStatusNavHeight(callback: (success: boolean, statusNavHeightVO?: StatusNavHeightVO) => void) {
         const statusNavHeightVO: StatusNavHeightVO = new StatusNavHeightVO()
         uni.getSystemInfo({
