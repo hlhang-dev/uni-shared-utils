@@ -170,6 +170,12 @@ export class UniAppManagement {
         await uni.closePreviewImage({})
     }
 
+    public static async setNavigationBarTitle (title: string) {
+        uni.setNavigationBarTitle({
+            title: title
+        })
+    }
+
     public static async makePhoneCall(phone: string) {
         uni.makePhoneCall({
             phoneNumber: phone
