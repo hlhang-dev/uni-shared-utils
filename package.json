@@ -25,7 +25,7 @@
   },
   "dependencies": {
     "json2typescript": "^1.5.1",
-    "ts-dev-common-utils": "^1.0.0",
+    "ts-dev-common-utils": "1.1.0",
     "tslib": "^2.4.1"
   }
 }

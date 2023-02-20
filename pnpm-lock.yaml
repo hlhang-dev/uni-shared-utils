@@ -7,13 +7,13 @@ specifiers:
   '@dcloudio/uni-stacktracey': 3.0.0-alpha-3060420220922001
   '@dcloudio/vite-plugin-uni': 3.0.0-alpha-3060420220922001
   json2typescript: ^1.5.1
-  ts-dev-common-utils: ^1.0.0
+  ts-dev-common-utils: 1.1.0
   tslib: ^2.4.1
   vite: ^2.9.14
 
 dependencies:
   json2typescript: 1.5.1
-  ts-dev-common-utils: 1.0.0
+  ts-dev-common-utils: 1.1.0
   tslib: 2.4.1
 
 devDependencies:
@@ -2081,8 +2081,8 @@ packages:
     engines: {node: '>=0.6'}
     dev: true
 
-  /ts-dev-common-utils/1.0.0:
-    resolution: {integrity: sha512-29MOOcpE+hvRIi5WA3CcFB4mExj0rvIcYINBEgROxaIGKDAXBr1JEhKCP/Y2X/nEZZPQ+VnAJBKS/S+QkaiKow==}
+  /ts-dev-common-utils/1.1.0:
+    resolution: {integrity: sha512-MsfDPGriSy90jb51ts1scIWdP5geKs0Cwmtqdc8OMAv/txM//bxRkNaWFJxqLY9CgG0SsigXjl6LFk3VzKkitw==}
     dependencies:
       class-validator: 0.13.2
       json2typescript: 1.5.1
