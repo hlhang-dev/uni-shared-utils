@@ -1,6 +1,6 @@
 {
   "name": "uni-shared-utils",
-  "version": "1.2.2",
+  "version": "1.2.3",
   "description": "uni app shared utils",
   "main": "src/index.ts",
   "author": "hlhang",
