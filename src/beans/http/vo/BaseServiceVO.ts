@@ -4,7 +4,11 @@ import { StringToBooleanConverter, StringToNumConverter } from 'ts-dev-common-ut
 
 @JsonObject('BaseServiceVO')
 export default class BaseServiceVO {
-    @JsonProperty('code', StringToBooleanConverter, true)
+    public static successParamStr: string = 'code'
+
+    public static converter: any = StringToBooleanConverter
+
+    @JsonProperty(BaseServiceVO.successParamStr, BaseServiceVO.converter, true)
     success: boolean = false
 
     @JsonProperty('code', StringToNumConverter, true)
