@@ -1,5 +1,6 @@
 import { StringToBooleanConverter } from 'ts-dev-common-utils'
 import BaseServiceVO from '../beans/http/vo/BaseServiceVO'
+import AuthServiceSuccessJsonConverter from './AuthServiceSuccessJsonConverter'
 import { HttpService } from './HttpService'
 
 export class HttpInit {
@@ -15,12 +16,14 @@ export class HttpInit {
 
   init(loginPage: string,
        timeout: number = 30000,
+       successCode: number = 1,
        successParamStr: string = 'code',
-       jsonCustomConvert: any = StringToBooleanConverter,
+       serverMessageParamStr: string = 'msg',
        header: object = {},
        isShowLoading: boolean = true) {
     BaseServiceVO.successParamStr = successParamStr
-    BaseServiceVO.converter = jsonCustomConvert
+    BaseServiceVO.serverMessageParamStr = serverMessageParamStr
+    AuthServiceSuccessJsonConverter.successCode = successCode
     HttpService.init(loginPage, timeout, header, isShowLoading)
   }
 }

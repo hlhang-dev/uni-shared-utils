@@ -48,7 +48,7 @@ export class HttpService {
         switch (responseCodeEnum) {
           case MyResponseCodeEnum.SUCCESS:
             if (result) {
-              HttpService.onHttpCodeChange(result.statusCode)
+              HttpService.onHttpCodeChange(result.data.code,result.data.msg)
               resolve(result)
             }
             break
@@ -61,13 +61,13 @@ export class HttpService {
     })
   }
 
-  private static onHttpCodeChange(statusCode: HttpStatusCode) {
+  private static onHttpCodeChange(statusCode: HttpStatusCode,msg: string) {
     switch (statusCode) {
       case HttpStatusCode.NO_PERMISSION:
         HttpService.onNoPermission()
         break
       case HttpStatusCode.FAILED:
-        ShowNoticeManagement.showNormalNotice(Lang.PLEASE_CONTACT_THE_ADMINISTRATOR)
+        ShowNoticeManagement.showNormalNotice(msg || Lang.PLEASE_CONTACT_THE_ADMINISTRATOR)
         break
       default:
         break
