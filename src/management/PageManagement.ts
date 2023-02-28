@@ -2,45 +2,69 @@ import { BrowserUtils } from 'ts-dev-common-utils'
 
 
 export class PageManagement {
-  public static redirectPage<T>(page: string, params?: object) {
-    uni.redirectTo({
-      url: page + BrowserUtils.objToUrlParam(params)
-    })
-  }
+    public static tabBarPath: string[] = []
 
+    public static redirectPage<T>(page: string, params?: object) {
+      PageManagement.checkTabBarPath(page)
+        uni.redirectTo({
+            url: page + BrowserUtils.objToUrlParam(params)
+        })
+    }
 
-  public static navigateToPage<T>(page: string, params?: object,callback?: () => void) {
-    uni.navigateTo({
-      url: page + BrowserUtils.objToUrlParam(params),
-      success: (result) => {
-        if (callback) {
-          callback()
-        }
+    public static reLaunchPage (page: string, params?: object) {
+      uni.reLaunch({
+        url: page + BrowserUtils.objToUrlParam(params)
+      })
+    }
+
+    private static isPathInTabBar (path: string) {
+      let isPathIsTabBarItem = false
+      if (PageManagement.tabBarPath.includes(path)) {
+        isPathIsTabBarItem = true
       }
-    })
-  }
+      return isPathIsTabBarItem
+    }
 
-  public static navigateBack(layers: number = 1) {
-    uni.navigateBack({
-      delta: layers
-    })
-  }
+    private static checkTabBarPath (path: string) {
+      if (PageManagement.isPathInTabBar(path)) {
+        PageManagement.switchTab(path)
+      }
+    }
 
-  public static switchTabPage<T>(page: string, params?: object) {
-    uni.switchTab({
-      url: page + BrowserUtils.objToUrlParam(params)
-    })
-  }
 
-  public static getUpperLevelPageRoute(): string {
-    const router = getCurrentPages()
-    return '/' + router[router.length - 2].route
-  }
+    public static navigateToPage<T>(page: string, params?: object, callback?: () => void) {
+      PageManagement.checkTabBarPath(page)
+      uni.navigateTo({
+            url: page + BrowserUtils.objToUrlParam(params),
+            success: () => {
+                if (callback) {
+                    callback()
+                }
+            }
+        })
+    }
 
-  public static getUpperLevelPage() {
-    const router = getCurrentPages()
-    return router[router.length - 2]
-  }
+    public static navigateBack(layers: number = 1) {
+        uni.navigateBack({
+            delta: layers
+        })
+    }
+
+    public static switchTab<T>(page: string) {
+        uni.switchTab({
+            url: page
+        })
+    }
+
+    public static getUpperLevelPageRoute(): string {
+        const router = getCurrentPages()
+        return '/' + router[router.length - 2].route
+    }
+
+    public static getUpperLevelPage() {
+        const router = getCurrentPages()
+        return router[router.length - 2]
+    }
 
 }
 
