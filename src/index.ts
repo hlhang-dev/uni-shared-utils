@@ -1,6 +1,7 @@
 // beans
 export { StatusNavHeightVO } from './beans/wx/StatusNavHeightVO'
 export { JsApiPaymentDTO } from './beans/payment/JsApiPaymentDTO'
+export { UploadItemDTO } from './beans/http/dto/UploadItemDTO'
 
 // Http
 export { HttpInit } from './common/HttpInit'
@@ -31,6 +32,11 @@ export {
 
 export { WxErrorMsg }  from  './definition/wechat/WxErrorMsg'
 export { UserInfoManagement } from  './management/UserInfoManagement'
+
+
+// mapper
+export { UniMapper } from './mapper/UniMapper'
+
 // decorator
 export { CheckMiniProgramUpdate } from './decorator/mini-program/MiniProgramDecorator'
 

@@ -1,10 +1,9 @@
 import { UploadItemDTO } from '../beans/http/dto/UploadItemDTO'
-import { HttpService } from '../common/HttpService'
 import { TokenManagement } from '../management/TokenManagement'
 import { ArrayUtils,StringUtils } from 'ts-dev-common-utils'
 
 
-export default class UniMappper {
+export  class UniMapper {
 
     private static readonly ACCOUNT_AUTH_TOKEN_HEADER: string = 'authorization'
 
@@ -15,7 +14,7 @@ export default class UniMappper {
         const result: any = {}
 
         if (token) {
-            result[UniMappper.ACCOUNT_AUTH_TOKEN_HEADER] = UniMappper.ACCOUNT_AUTH_TOKEN_PREFIX + token
+            result[UniMapper.ACCOUNT_AUTH_TOKEN_HEADER] = UniMapper.ACCOUNT_AUTH_TOKEN_PREFIX + token
         }
         return result
     }
@@ -23,6 +22,7 @@ export default class UniMappper {
 
     public static uploadFile(uploadFileItem: UploadItemDTO, url: string, token: string = '', key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         const currentAuthToken = TokenManagement.getInstance().getAccountToken()
+        uploadFileItem.id = StringUtils.getRandomStr()
         return new Promise((resolve, reject) => {
             if (!uploadFileItem.isUpload) {
                 uni.uploadFile({
@@ -30,14 +30,13 @@ export default class UniMappper {
                     url: url,
                     fileType: fileType,
                     name: key,
-                    header: UniMappper.buildHeader(token || currentAuthToken),
+                    header: UniMapper.buildHeader(token || currentAuthToken),
                     success: result => {
-                        uploadFileItem.id = StringUtils.getRandomStr()
+                        uploadFileItem.serverData = result.data
                         uploadFileItem.isUpload = true
-                        resolve(result.data)
+                        resolve(uploadFileItem)
                     },
-                    fail: (err) => {
-                        uploadFileItem.id = StringUtils.getRandomStr()
+                    fail: () => {
                         reject('upload file item error' + uploadFileItem.id)
                     }
                 })
@@ -50,12 +49,11 @@ export default class UniMappper {
 
     public static uploadFiles(uploadFileList: Array<UploadItemDTO>, url: string, token: string = '', key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         return new Promise<void>(async (resolve, reject) => {
-            if (!ArrayUtils.isEmpty(uploadFileList)) {
+            if (ArrayUtils.isNotEmpty(uploadFileList)) {
                 for (let i = 0; i < uploadFileList.length; i++) {
                     const item = uploadFileList[i]
                     try {
-                        const data = await UniMappper.uploadFile(item, url, token, key, fileType)
-                        item.serverData = data
+                        await UniMapper.uploadFile(item, url, token, key, fileType)
                         resolve()
                     } catch (e) {
                         reject('network error')
