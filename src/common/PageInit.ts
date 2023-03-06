@@ -1,6 +1,6 @@
 import { PageManagement } from '../management/PageManagement'
 
-class PageInit {
+export class PageInit {
 
     private static _instance: PageInit
 
@@ -16,5 +16,3 @@ class PageInit {
         PageManagement.tabBarPath = tabBarPath
     }
 }
-
-export default PageInit

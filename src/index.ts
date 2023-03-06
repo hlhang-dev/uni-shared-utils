@@ -7,6 +7,7 @@ export { UploadItemDTO } from './beans/http/dto/UploadItemDTO'
 export { HttpInit } from './common/HttpInit'
 export { HttpService } from './common/HttpService'
 export { UniUtils } from './common/UniUtils'
+export { PageInit } from './common/PageInit'
 
 // Enum
 export { UniErrorMsgEnum } from './definition/msg/UniErrorMsgEnum'
