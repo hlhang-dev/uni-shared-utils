@@ -49,12 +49,16 @@ export  class UniMapper {
 
     public static uploadFiles(uploadFileList: Array<UploadItemDTO>, url: string, token: string = '', key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         return new Promise<void>(async (resolve, reject) => {
+            let count = 0
             if (ArrayUtils.isNotEmpty(uploadFileList)) {
                 for (let i = 0; i < uploadFileList.length; i++) {
                     const item = uploadFileList[i]
                     try {
                         await UniMapper.uploadFile(item, url, token, key, fileType)
-                        resolve()
+                        count++
+                        if (uploadFileList.length === count) {
+                            resolve()
+                        }
                     } catch (e) {
                         reject('network error')
                     }
