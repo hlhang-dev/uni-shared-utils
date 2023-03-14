@@ -27,6 +27,8 @@ export class UniAppManagement {
             sslVerify: false,
             timeout: timeout,
             success: (res) => {
+                res.data = JSON.parse(JSON.stringify(res.data))
+                res.header = JSON.parse(JSON.stringify(res.header))
                 const result = MyJsonConverter.getInstance().deserializeObject(res, ApiUnifiedVO)
                 callback(MyResponseCodeEnum.SUCCESS, result)
             },
