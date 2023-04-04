@@ -16,7 +16,7 @@ export class HttpInit {
 
   init(loginPage: string,
        timeout: number = 30000,
-       successCode: number = 1,
+       successCode: number | boolean = 1,
        successParamStr: string = 'code',
        serverMessageParamStr: string = 'msg',
        header: object = {},
