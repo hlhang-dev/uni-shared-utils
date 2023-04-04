@@ -13,6 +13,9 @@ export default class BaseServiceVO {
     @JsonProperty(BaseServiceVO.successParamStr, AuthServiceSuccessJsonConverter, true)
     success: boolean = false
 
+    @JsonProperty('success', Boolean, true)
+    serverSuccess: boolean = false
+
     @JsonProperty('code', StringToNumConverter, true)
     code: number = 0
 
