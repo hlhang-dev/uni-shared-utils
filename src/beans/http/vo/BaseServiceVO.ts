@@ -3,28 +3,34 @@ import { StringToBooleanConverter, StringToNumConverter } from 'ts-dev-common-ut
 import AuthServiceSuccessJsonConverter from '../../../common/AuthServiceSuccessJsonConverter'
 
 
-@JsonObject('BaseServiceVO')
+@JsonObject( 'BaseServiceVO' )
 export default class BaseServiceVO {
     public static successParamStr: string = 'code'
 
     public static serverMessageParamStr: string = 'msg'
 
 
-    @JsonProperty(BaseServiceVO.successParamStr, AuthServiceSuccessJsonConverter, true)
+    @JsonProperty( BaseServiceVO.successParamStr, AuthServiceSuccessJsonConverter, true )
     success: boolean = false
 
-    @JsonProperty('success', Boolean, true)
+    @JsonProperty( 'success', Boolean, true )
     serverSuccess: boolean = false
 
-    @JsonProperty('code', StringToNumConverter, true)
+    @JsonProperty( 'code', StringToNumConverter, true )
     code: number = 0
 
-    @JsonProperty(BaseServiceVO.serverMessageParamStr, String, true)
+    @JsonProperty( BaseServiceVO.serverMessageParamStr, String, true )
     msg: string = ''
 
-    @JsonProperty('data', Any, true)
+    @JsonProperty( 'errorDesc', String, true )
+    errorDesc: string = ''
+
+    @JsonProperty( 'errorCode', String, true )
+    errorCode: string =  ""
+
+    @JsonProperty( 'data', Any, true )
     result: any = {}
 
-    @JsonProperty('', String, true)
+    @JsonProperty( '', String, true )
     time: string = ''
 }

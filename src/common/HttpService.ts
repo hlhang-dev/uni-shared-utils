@@ -48,7 +48,7 @@ export class HttpService {
         switch (responseCodeEnum) {
           case MyResponseCodeEnum.SUCCESS:
             if (result) {
-              HttpService.onHttpCodeChange(result.data.code,result.data.msg)
+              HttpService.onHttpCodeChange(result.statusCode,result.data.msg)
               resolve(result)
             }
             break
