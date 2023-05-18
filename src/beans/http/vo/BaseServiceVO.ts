@@ -1,36 +1,25 @@
 import { Any, JsonObject, JsonProperty } from 'json2typescript'
-import { StringToBooleanConverter, StringToNumConverter } from 'ts-dev-common-utils'
+import { StringToNumConverter } from 'ts-dev-common-utils'
 import AuthServiceSuccessJsonConverter from '../../../common/AuthServiceSuccessJsonConverter'
+import { GlobalConfiguration } from '../../../definition/GlobalConfiguration'
 
 
-@JsonObject( 'BaseServiceVO' )
+@JsonObject('BaseServiceVO')
 export default class BaseServiceVO {
-    public static successParamStr: string = 'code'
-
-    public static serverMessageParamStr: string = 'msg'
 
 
-    @JsonProperty( BaseServiceVO.successParamStr, AuthServiceSuccessJsonConverter, true )
+    @JsonProperty(GlobalConfiguration.successParamStr, AuthServiceSuccessJsonConverter, true)
     success: boolean = false
 
-    @JsonProperty( 'success', Boolean, true )
-    serverSuccess: boolean = false
-
-    @JsonProperty( 'code', StringToNumConverter, true )
+    @JsonProperty(GlobalConfiguration.codeParamStr, StringToNumConverter, true)
     code: number = 0
 
-    @JsonProperty( BaseServiceVO.serverMessageParamStr, String, true )
+    @JsonProperty(GlobalConfiguration.serverMessageParamStr, String, true)
     msg: string = ''
 
-    @JsonProperty( 'errorDesc', String, true )
-    errorDesc: string = ''
-
-    @JsonProperty( 'errorCode', String, true )
-    errorCode: string =  ""
-
-    @JsonProperty( 'data', Any, true )
+    @JsonProperty('data', Any, true)
     result: any = {}
 
-    @JsonProperty( '', String, true )
+    @JsonProperty('', String, true)
     time: string = ''
 }

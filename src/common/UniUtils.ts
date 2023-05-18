@@ -29,6 +29,30 @@ class UniUtils {
     }
     return result
   }
+
+  public static getDomHeight(domClass: string, vueInstance: any) {
+    return new Promise<number>((resolve, reject) => {
+      let height = 0
+      let info = uni.createSelectorQuery().in(vueInstance).select('.' + domClass);
+      info.boundingClientRect((data: any) => {
+        height = data.height
+        resolve(height)
+      }).exec()
+    })
+
+  }
+
+  public static getDomWidth(domClass: string, vueInstance: any) {
+    return new Promise<number>((resolve, reject) => {
+      let width = 0
+      let info = uni.createSelectorQuery().in(vueInstance).select('.' + domClass);
+      info.boundingClientRect((data: any) => {
+        width = data.width
+        resolve(width)
+      }).exec()
+    })
+
+  }
 }
 
 export {

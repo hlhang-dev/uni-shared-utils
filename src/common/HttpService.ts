@@ -19,7 +19,9 @@ export class HttpService {
 
   private static HEADER = {}
 
-  public static init(loginPage: string, timeout: number, header: object = {},isShowLoading: boolean) {
+  private static callback: (data: object) => void
+
+  public static init(loginPage: string, timeout: number, header: object = {},isShowLoading: boolean,callback: (data: object) => void) {
     console.log( '%c\n' +
         '%c _   _ _   _                             _            _____      _ _   %c\n' +
         '%c | | | | | | |                           (_)          |_   _|    (_) |  %c\n' +
@@ -34,6 +36,7 @@ export class HttpService {
     this.LOGIN_PAGE = loginPage
     this.IS_SHOW_LOADING = isShowLoading
     this.HEADER  = header
+    this.callback = callback
   }
 
   public static doRequest(
@@ -41,8 +44,9 @@ export class HttpService {
       method: string,
       data: object = {},
       headers?: object,
-      showLoading = true,
+      showLoading = true
   ): Promise<ApiUnifiedVO> {
+    HttpService.callback(data)
     return new Promise<ApiUnifiedVO>((resolve, reject) => {
       UniAppManagement.wxRequest(url, method, data, HttpService.SERVER_API_TIMEOUT, (responseCodeEnum: MyResponseCodeEnum, result?: ApiUnifiedVO) => {
         switch (responseCodeEnum) {

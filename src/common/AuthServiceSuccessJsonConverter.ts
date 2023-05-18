@@ -10,7 +10,9 @@ export default class AuthServiceSuccessJsonConverter implements JsonCustomConver
 
     deserialize(data: any): boolean {
         let isSuccess: boolean
-        if (typeof data === 'boolean') {
+        if (typeof data === 'string') {
+            isSuccess = (data === 'true')
+        }else if (typeof data === 'boolean') {
             isSuccess = data
         }else {
             isSuccess = (Number(data) === AuthServiceSuccessJsonConverter.successCode)
