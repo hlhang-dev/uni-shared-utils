@@ -36,8 +36,8 @@ export  class UniMapper {
                         uploadFileItem.isUpload = true
                         resolve(uploadFileItem)
                     },
-                    fail: () => {
-                        reject('upload file item error' + uploadFileItem.id)
+                    fail: (error) => {
+                        reject('upload file item error' + error)
                     }
                 })
             } else {
@@ -60,7 +60,7 @@ export  class UniMapper {
                             resolve()
                         }
                     } catch (e) {
-                        reject('network error')
+                        reject('network error' + e)
                     }
                 }
             } else {

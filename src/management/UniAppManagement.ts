@@ -432,14 +432,18 @@ export class UniAppManagement {
 
     public static async openDocument(url: string,
                                      showMenu: boolean = true,
+                                     fileType: string = '',
                                      silent: boolean = false) {
         try {
             if (!silent) LoadingManagement.getInstance().show()
             const file = await UniAppManagement.downloadFile(url, true)
             uni.openDocument({
                 filePath: file,
-                // @ts-ignore
+                fileType: fileType,
                 showMenu: showMenu,
+                fail: (error) => {
+                    console.log(error)
+                },
                 complete: () => {
                     if (!silent) LoadingManagement.getInstance().hide()
                 }

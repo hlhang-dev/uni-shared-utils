@@ -1,6 +1,6 @@
 {
   "name": "uni-shared-utils",
-  "version": "1.4.9",
+  "version": "1.5.1",
   "description": "uni app shared utils",
   "main": "src/index.ts",
   "author": "hlhang",
@@ -16,7 +16,7 @@
     "publish": "npm publish"
   },
   "devDependencies": {
-    "@dcloudio/types": "3.0.14",
+    "@dcloudio/types": "3.3.2",
     "@dcloudio/uni-automator": "3.0.0-alpha-3060420220922001",
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060420220922001",
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060420220922001",

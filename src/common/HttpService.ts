@@ -52,7 +52,7 @@ export class HttpService {
         switch (responseCodeEnum) {
           case MyResponseCodeEnum.SUCCESS:
             if (result) {
-              HttpService.onHttpCodeChange(result.statusCode,result.data.msg)
+              HttpService.onHttpCodeChange(result.statusCode,result.data.msg,result.data.code)
               resolve(result)
             }
             break
@@ -65,7 +65,11 @@ export class HttpService {
     })
   }
 
-  private static onHttpCodeChange(statusCode: HttpStatusCode,msg: string) {
+  private static onHttpCodeChange(statusCode: HttpStatusCode, msg: string, code: number) {
+    if (code === HttpStatusCode.NO_PERMISSION) {
+      HttpService.onNoPermission()
+      return
+    }
     switch (statusCode) {
       case HttpStatusCode.NO_PERMISSION:
         HttpService.onNoPermission()
