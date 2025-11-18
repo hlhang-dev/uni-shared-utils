@@ -22,7 +22,8 @@
 
     },
     "types": [
-      "@dcloudio/types"
+      "@dcloudio/types",
+      "node"
     ],
     "lib": [
       "esnext",

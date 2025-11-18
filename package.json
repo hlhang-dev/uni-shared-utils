@@ -1,18 +1,34 @@
 {
   "name": "uni-shared-utils",
-  "version": "1.5.2",
+  "version": "1.5.4",
   "description": "uni app shared utils",
-  "main": "src/index.ts",
+  "main": "dist/cjs/index.js",
+  "module": "dist/esm/index.js",
+  "types": "dist/esm/index.d.ts",
   "author": "hlhang",
   "license": "ISC",
   "files": [
-    "src"
+    "dist"
   ],
+  "sideEffects": false,
+  "exports": {
+    ".": {
+      "types": "./dist/esm/index.d.ts",
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    }
+  },
   "keywords": [
     "uniapp",
     "Utils"
   ],
   "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build:esm": "tsc -p tsconfig.build.esm.json",
+    "build:cjs": "tsc -p tsconfig.build.cjs.json",
+    "build": "npm run clean && npm run build:esm && npm run build:cjs",
+    "postbuild": "node scripts/postbuild.cjs",
+    "prepublishOnly": "npm run build",
     "publish": "npm publish"
   },
   "devDependencies": {
@@ -21,7 +37,9 @@
     "@dcloudio/uni-cli-shared": "3.0.0-alpha-3060420220922001",
     "@dcloudio/uni-stacktracey": "3.0.0-alpha-3060420220922001",
     "@dcloudio/vite-plugin-uni": "3.0.0-alpha-3060420220922001",
-    "vite": "^2.9.14"
+    "vite": "^2.9.14",
+    "typescript": "^5.6.3",
+    "@types/node": "^20"
   },
   "dependencies": {
     "json2typescript": "^1.5.1",

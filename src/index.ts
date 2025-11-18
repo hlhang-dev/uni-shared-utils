@@ -42,3 +42,4 @@ export { UniMapper } from './mapper/UniMapper'
 export { CheckMiniProgramUpdate } from './decorator/mini-program/MiniProgramDecorator'
 
 
+export {}

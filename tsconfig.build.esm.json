@@ -1,0 +1,17 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./dist/esm",
+    "module": "esnext",
+    "target": "es2018",
+    "declaration": true,
+    "declarationDir": "./dist/esm",
+    "declarationMap": false,
+    "sourceMap": false,
+    "importHelpers": true,
+    "emitDeclarationOnly": false
+  },
+  "include": ["src/**/*.ts", "src/**/*.d.ts"],
+  "exclude": ["src/index.d.ts", "node_modules", "unpackage", "src/**/*.nvue"]
+}
