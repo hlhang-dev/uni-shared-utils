@@ -4,7 +4,7 @@
  * @date  2023/4/28
  */
 class GlobalConfiguration {
-    public static successParamStr: string = 'code'
+    public static successParamStr: string = 'success'
 
     public static codeParamStr: string = 'code'
 

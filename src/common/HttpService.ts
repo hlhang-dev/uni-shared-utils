@@ -52,7 +52,7 @@ export class HttpService {
         switch (responseCodeEnum) {
           case MyResponseCodeEnum.SUCCESS:
             if (result) {
-              HttpService.onHttpCodeChange(result.statusCode,result.data.msg,result.data.code)
+              HttpService.onHttpCodeChange(result.data.msg,result.data.code)
               resolve(result)
             }
             break
@@ -65,16 +65,14 @@ export class HttpService {
     })
   }
 
-  private static onHttpCodeChange(statusCode: HttpStatusCode, msg: string, code: number) {
-    if (code === HttpStatusCode.NO_PERMISSION) {
-      HttpService.onNoPermission()
-      return
-    }
-    switch (statusCode) {
+  private static onHttpCodeChange(msg: string, code: string) {
+    switch (code) {
       case HttpStatusCode.NO_PERMISSION:
+      case HttpStatusCode.CLEAR_TOKEN:
         HttpService.onNoPermission()
         break
       case HttpStatusCode.FAILED:
+      case HttpStatusCode.DATA_ERROR:
         ShowNoticeManagement.showNormalNotice(msg || Lang.PLEASE_CONTACT_THE_ADMINISTRATOR)
         break
       default:

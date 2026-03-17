@@ -11,8 +11,8 @@ export default class BaseServiceVO {
     @JsonProperty(GlobalConfiguration.successParamStr, AuthServiceSuccessJsonConverter, true)
     success: boolean = false
 
-    @JsonProperty(GlobalConfiguration.codeParamStr, StringToNumConverter, true)
-    code: number = 0
+    @JsonProperty(GlobalConfiguration.codeParamStr, String, true)
+    code: string = ''
 
     @JsonProperty(GlobalConfiguration.serverMessageParamStr, String, true)
     msg: string = ''
