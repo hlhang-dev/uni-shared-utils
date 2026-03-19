@@ -11,6 +11,7 @@ export { PageInit }    from './common/PageInit'
 
 // Enum
 export { UniErrorMsgEnum } from './definition/msg/UniErrorMsgEnum'
+export { ShowModelCodeEnum } from './definition/http/ShowModelCodeEnum'
 
 // Management
 export { PageManagement }       from './management/PageManagement'

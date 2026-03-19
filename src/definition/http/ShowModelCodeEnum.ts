@@ -4,4 +4,6 @@ enum ShowModelCodeEnum {
   CANCEL
 }
 
-export default ShowModelCodeEnum
+export {
+  ShowModelCodeEnum
+}
