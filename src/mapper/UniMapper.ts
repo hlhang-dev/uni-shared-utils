@@ -8,7 +8,7 @@ export  class UniMapper {
     private static readonly ACCOUNT_AUTH_TOKEN_HEADER: string = 'authorization'
 
 
-    private static readonly ACCOUNT_AUTH_TOKEN_PREFIX: string = 'Bearer '
+    private static readonly ACCOUNT_AUTH_TOKEN_PREFIX: string = ''
 
     private static buildHeader(token: string | undefined): Object {
         const result: any = {}
