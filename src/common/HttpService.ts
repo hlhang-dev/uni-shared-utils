@@ -67,6 +67,9 @@ export class HttpService {
 
   private static onHttpCodeChange(msg: string, code: string) {
     switch (code) {
+      case HttpStatusCode.UN_SETTLE_IN:
+        PageManagement.navigateToPage('/pages/biz/ApplyBecomeMerchantPage')
+        break
       case HttpStatusCode.NO_PERMISSION:
       case HttpStatusCode.CLEAR_TOKEN:
         HttpService.onNoPermission()
