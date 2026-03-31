@@ -5,7 +5,8 @@ import MyResponseCodeEnum from '../definition/http/MyResponseCodeEnum'
 import ApiUnifiedVO from '../beans/http/vo/ApiUnifiedVO'
 import {UniUtils} from '../common/UniUtils'
 import { ShowModelCodeEnum } from '../definition/http/ShowModelCodeEnum'
-import {Lang} from '../definition/Lang'
+import {LangKey} from '../definition/LangKey'
+import {LangManagement} from './LangManagement'
 import {UniProviderServiceEnum} from '../definition/coomon/UniProviderServiceEnum'
 import {UniPaymentProviderEnum} from '../definition/coomon/UniPaymentProviderEnum'
 import {JsApiPaymentDTO} from '../beans/payment/JsApiPaymentDTO'
@@ -131,7 +132,7 @@ export class UniAppManagement {
             data: data,
             success: () => {
                 if (isShowTips) {
-                    ShowNoticeManagement.showNormalNotice('复制成功')
+                    ShowNoticeManagement.showNormalNotice(LangManagement.getInstance().t(LangKey.COPY_SUCCESS))
                 }
             }
         })
@@ -258,14 +259,16 @@ export class UniAppManagement {
                     UniAppManagement.onUpdateApplicationReady()
                 })
                 updateManager.onUpdateFailed(() => {
-                    UniAppManagement.doShowModal(Lang.UPDATE_NOTICE_TITLE, Lang.UPDATE_NOTICE_FAILED_CONTENT, false, this.onUpdateFailed)
+                    const langMgr = LangManagement.getInstance()
+                    UniAppManagement.doShowModal(langMgr.t(LangKey.UPDATE_NOTICE_TITLE), langMgr.t(LangKey.UPDATE_NOTICE_FAILED_CONTENT), false, this.onUpdateFailed)
                 })
             }
         })
     }
 
     private static onUpdateApplicationReady() {
-        UniAppManagement.doShowModal(Lang.UPDATE_NOTICE_TITLE, Lang.UPDATE_NOTICE_READY_CONTENT, true, UniAppManagement.onUpdateApplicationReadyShowModelCallback)
+        const langMgr = LangManagement.getInstance()
+        UniAppManagement.doShowModal(langMgr.t(LangKey.UPDATE_NOTICE_TITLE), langMgr.t(LangKey.UPDATE_NOTICE_READY_CONTENT), true, UniAppManagement.onUpdateApplicationReadyShowModelCallback)
     }
 
     private static onUpdateApplicationReadyShowModelCallback(code: ShowModelCodeEnum) {
@@ -449,7 +452,7 @@ export class UniAppManagement {
                 }
             })
         } catch (e) {
-            ShowNoticeManagement.showNormalNotice('请检查网络设置')
+            ShowNoticeManagement.showNormalNotice(LangManagement.getInstance().t(LangKey.PLEASE_CHECK_NETWORK_OR_DO_REFRESH))
         }
     }
 }

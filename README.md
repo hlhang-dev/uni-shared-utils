@@ -6,6 +6,45 @@
 
 ## API
 
+### LangManagement (多语言管理)
+
+支持 4 种语言：简体中文 (zh-CN)、繁体中文 (zh-TW)、英语 (en-US)、日语 (ja-JP)
+
+|          methods |           type            | remark                   |
+| ---------------: | :-----------------------: | ------------------------ |
+|      getInstance |     LangManagement        | 获取单例实例             |
+|        setLocale |           void            | 设置当前语言             |
+|        getLocale |        LocaleType         | 获取当前语言             |
+| setCustomLangPack|           void            | 设置自定义语言包         |
+|clearCustomLangPack|          void            | 清除自定义语言包         |
+|                t |          string           | 翻译指定的语言键         |
+| getCurrentLangPack|        LangPack          | 获取当前语言包           |
+|    getAllLocales |      LocaleType[]         | 获取所有支持的语言       |
+
+##### 使用示例
+
+```typescript
+import { LangManagement, LangKey } from 'uni-shared-utils'
+
+// 设置语言为英文
+LangManagement.getInstance().setLocale('en-US')
+
+// 获取翻译文本
+const text = LangManagement.getInstance().t(LangKey.LOGIN_SUCCESS_TITLE)
+
+// 设置自定义语言包（部分覆盖）
+LangManagement.getInstance().setCustomLangPack({
+  LOGIN_SUCCESS_TITLE: '登录成功啦！'
+})
+```
+
+##### 支持的语言类型
+
+- `zh-CN`: 简体中文（默认）
+- `zh-TW`: 繁体中文
+- `en-US`: 英语
+- `ja-JP`: 日语
+
 ### TokenManagement (该token存入后会成为HttpService默认的token)
 
 |            methods |       type       | remark    |

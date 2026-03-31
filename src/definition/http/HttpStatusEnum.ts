@@ -4,7 +4,9 @@ enum HttpStatusCode {
   CLEAR_TOKEN = 'A00008',
   FAILED = 'A00005',
   UN_SETTLE_IN = 'A06000',
-  DATA_ERROR =  'A00007'
+  DATA_ERROR =  'A00007',
+  UN_BIND_MAIL = 'A00011',
+  UN_SET_PASSWORD = 'A00012'
 }
 
 

@@ -1,7 +1,8 @@
 import { TokenManagement } from '../management/TokenManagement'
 import ApiUnifiedVO from '../beans/http/vo/ApiUnifiedVO'
 import HttpStatusCode from '../definition/http/HttpStatusEnum'
-import { Lang } from '../definition/Lang'
+import { LangKey } from '../definition/LangKey'
+import { LangManagement } from '../management/LangManagement'
 import { ShowNoticeManagement } from '../management/ShowNoticeManagement'
 import { LoginManagement } from '../management/LoginManagement'
 import { UniAppManagement } from '../management/UniAppManagement'
@@ -57,7 +58,7 @@ export class HttpService {
             }
             break
           case MyResponseCodeEnum.FAILED:
-            ShowNoticeManagement.showNormalNotice(Lang.PLEASE_CONTACT_THE_ADMINISTRATOR)
+            ShowNoticeManagement.showNormalNotice(LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
             reject()
             break
         }
@@ -70,13 +71,19 @@ export class HttpService {
       case HttpStatusCode.UN_SETTLE_IN:
         PageManagement.navigateToPage('/pages/biz/ApplyBecomeMerchantPage')
         break
+      case HttpStatusCode.UN_BIND_MAIL:
+        PageManagement.navigateToPage('/pages/login/BindEMailPage')
+        break
+      case HttpStatusCode.UN_SET_PASSWORD:
+        PageManagement.navigateToPage('/pages/login/SetPasswordPage')
+        break
       case HttpStatusCode.NO_PERMISSION:
       case HttpStatusCode.CLEAR_TOKEN:
         HttpService.onNoPermission()
         break
       case HttpStatusCode.FAILED:
       case HttpStatusCode.DATA_ERROR:
-        ShowNoticeManagement.showNormalNotice(msg || Lang.PLEASE_CONTACT_THE_ADMINISTRATOR)
+        ShowNoticeManagement.showNormalNotice(msg || LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
         break
       default:
         break
@@ -92,8 +99,9 @@ export class HttpService {
     HttpService.ANTI_SHAKE_COUNTER += 1
     TokenManagement.getInstance().removeAccountToken()
     if (HttpService.isCanShowExpiredLoginModel()) {
-      const title: string = LoginManagement.getInstance().isAccountLogin() ? Lang.LOGIN_BE_OVERDUE_NOTICE: Lang.LOGIN_NOTICE
-      const content: string = LoginManagement.getInstance().isAccountLogin() ? Lang.LOGIN_BE_OVERDUE: Lang.NOT_LOGGED_IN
+      const langMgr = LangManagement.getInstance()
+      const title: string = LoginManagement.getInstance().isAccountLogin() ? langMgr.t(LangKey.LOGIN_BE_OVERDUE_NOTICE): langMgr.t(LangKey.LOGIN_NOTICE)
+      const content: string = LoginManagement.getInstance().isAccountLogin() ? langMgr.t(LangKey.LOGIN_BE_OVERDUE): langMgr.t(LangKey.NOT_LOGGED_IN)
       UniAppManagement.doShowModal(title, content, false, HttpService.onLoginBeOverdueCallback)
     }
   }

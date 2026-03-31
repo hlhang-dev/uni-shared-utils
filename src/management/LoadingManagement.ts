@@ -1,3 +1,6 @@
+import { LangKey } from '../definition/LangKey'
+import { LangManagement } from './LangManagement'
+
 export class LoadingManagement {
   private static _instance: LoadingManagement
 
@@ -14,7 +17,7 @@ export class LoadingManagement {
   show() {
     if (LoadingManagement.loadingCounter === 0) {
       uni.showLoading({
-        title: '加载中',
+        title: LangManagement.getInstance().t(LangKey.LOADING),
         mask: true
       })
     }

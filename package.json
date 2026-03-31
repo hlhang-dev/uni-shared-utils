@@ -1,6 +1,6 @@
 {
   "name": "uni-shared-utils",
-  "version": "1.5.9",
+  "version": "1.5.93",
   "description": "uni app shared utils",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
