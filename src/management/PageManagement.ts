@@ -32,13 +32,13 @@ export class PageManagement {
     }
 
 
-    public static navigateToPage<T>(page: string, params?: object, callback?: () => void) {
+    public static navigateToPage<T>(page: string, params?: object, callback?: (result: any) => void) {
       PageManagement.checkTabBarPath(page)
       uni.navigateTo({
             url: page + BrowserUtils.objToUrlParam(params),
-            success: () => {
+            success: (result) => {
                 if (callback) {
-                    callback()
+                    callback(result)
                 }
             }
         })
