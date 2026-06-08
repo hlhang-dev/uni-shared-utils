@@ -69,24 +69,10 @@ export class HttpService {
 
   private static onHttpCodeChange(msg: string, code: string) {
     switch (code) {
-      case HttpStatusCode.UN_SETTLE_IN:
-        PageManagement.navigateToPage('/pages/biz/ApplyBecomeMerchantPage')
-        break
-      case HttpStatusCode.UN_BIND_MAIL:
-        PageManagement.navigateToPage('/pages/login/BindEMailPage')
-        break
-      case HttpStatusCode.UN_SET_PASSWORD:
-        PageManagement.navigateToPage('/pages/login/SetPasswordPage')
-        break
-      case HttpStatusCode.PASSWORD_ERROR_LIMIT:
-        HttpService.onPasswordErrorLimit(msg)
-        break
       case HttpStatusCode.NO_PERMISSION:
-      case HttpStatusCode.CLEAR_TOKEN:
         HttpService.onNoPermission()
         break
       case HttpStatusCode.FAILED:
-      case HttpStatusCode.DATA_ERROR:
         ShowNoticeManagement.showNormalNotice(msg || LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
         break
       default:
@@ -112,24 +98,6 @@ export class HttpService {
 
   private static onLoginBeOverdueCallback () {
     PageManagement.navigateToPage(HttpService.LOGIN_PAGE, undefined, HttpService.onMoveToLoginPageSuccess)
-  }
-
-  private static onPasswordErrorLimit(msg: string) {
-    UniAppManagement.doShowModal(LangManagement.getInstance().t(LangKey.NOTICE), msg, true, HttpService.onPasswordErrorLimitCallback)
-  }
-
-  private static onPasswordErrorLimitCallback(code: ShowModelCodeEnum) {
-    switch (code) {
-      case ShowModelCodeEnum.SUCCESS:
-        PageManagement.navigateToPage('/pages/login/RecoverYourPasswordPage')
-        break
-      case ShowModelCodeEnum.FAILED:
-        break
-      case ShowModelCodeEnum.CANCEL:
-        break
-      default:
-        break
-    }
   }
 
   private static onMoveToLoginPageSuccess() {
