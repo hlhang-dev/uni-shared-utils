@@ -5,7 +5,7 @@ import { ArrayUtils,StringUtils } from 'ts-dev-common-utils'
 
 export  class UniMapper {
 
-    private static readonly ACCOUNT_AUTH_TOKEN_HEADER: string = 'authorization'
+    private static readonly ACCOUNT_AUTH_TOKEN_HEADER: string = 'Authorization'
 
 
     private static readonly ACCOUNT_AUTH_TOKEN_PREFIX: string = 'Bearer '
