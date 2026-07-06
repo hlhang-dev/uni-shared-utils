@@ -20,6 +20,12 @@ export default class BaseServiceVO {
     @JsonProperty('data', Any, true)
     result: any = {}
 
+    @JsonProperty('rows', Any, true)
+    rows: any = {}
+
+    @JsonProperty('total', Number, true)
+    total: number = 0
+
     @JsonProperty('', String, true)
     time: string = ''
 }

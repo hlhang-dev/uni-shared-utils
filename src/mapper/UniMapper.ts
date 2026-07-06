@@ -10,17 +10,22 @@ export  class UniMapper {
 
     private static readonly ACCOUNT_AUTH_TOKEN_PREFIX: string = 'Bearer '
 
-    private static buildHeader(token: string | undefined): Object {
+    private static readonly ACCOUNT_CLIENT_ID_HEADER: string = 'clientId'
+
+    private static buildHeader(token: string | undefined,clientId?: string): Object {
         const result: any = {}
 
         if (token) {
             result[UniMapper.ACCOUNT_AUTH_TOKEN_HEADER] = UniMapper.ACCOUNT_AUTH_TOKEN_PREFIX + token
         }
+        if (clientId) {
+            result[UniMapper.ACCOUNT_CLIENT_ID_HEADER] = clientId
+        }
         return result
     }
 
 
-    public static uploadFile(uploadFileItem: UploadItemDTO, url: string, token: string = '', key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
+    public static uploadFile(uploadFileItem: UploadItemDTO, url: string, token: string = '', clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         const currentAuthToken = TokenManagement.getInstance().getAccountToken()
         uploadFileItem.id = StringUtils.getRandomStr()
         return new Promise((resolve, reject) => {
@@ -30,7 +35,7 @@ export  class UniMapper {
                     url: url,
                     fileType: fileType,
                     name: key,
-                    header: UniMapper.buildHeader(token || currentAuthToken),
+                    header: UniMapper.buildHeader(token || currentAuthToken,clientId),
                     success: result => {
                         uploadFileItem.serverData = result.data
                         uploadFileItem.isUpload = true
@@ -47,14 +52,14 @@ export  class UniMapper {
         })
     }
 
-    public static uploadFiles(uploadFileList: Array<UploadItemDTO>, url: string, token: string = '', key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
+    public static uploadFiles(uploadFileList: Array<UploadItemDTO>, url: string, token: string = '',clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         return new Promise<void>(async (resolve, reject) => {
             let count = 0
             if (ArrayUtils.isNotEmpty(uploadFileList)) {
                 for (let i = 0; i < uploadFileList.length; i++) {
                     const item = uploadFileList[i]
                     try {
-                        await UniMapper.uploadFile(item, url, token, key, fileType)
+                        await UniMapper.uploadFile(item, url, token, clientId,key, fileType)
                         count++
                         if (uploadFileList.length === count) {
                             resolve()
