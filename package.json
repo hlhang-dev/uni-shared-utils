@@ -1,6 +1,6 @@
 {
   "name": "uni-shared-utils",
-  "version": "1.6.07",
+  "version": "1.6.09",
   "description": "uni app shared utils",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -29,7 +29,7 @@
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "postbuild": "node scripts/postbuild.cjs",
     "prepublishOnly": "npm run build",
-    "publish": "npm publish"
+    "release": "npm publish"
   },
   "devDependencies": {
     "@dcloudio/types": "3.3.2",

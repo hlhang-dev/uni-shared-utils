@@ -8,7 +8,7 @@ class GlobalConfiguration {
 
     public static codeParamStr: string = 'code'
 
-    public static serverMessageParamStr: string = 'msg'
+    public static serverMessageParamStr: string = 'message'
 }
 
 export {
