@@ -1,6 +1,6 @@
 import { Any, JsonObject, JsonProperty } from 'json2typescript'
 import HttpStatusCode from '../../../definition/http/HttpStatusEnum'
-import BaseServiceVO from './BaseServiceVO'
+import { BaseServiceVO } from './BaseServiceVO'
 import HeaderVO from './HeaderVO'
 
 @JsonObject('ApiUnifiedVO')

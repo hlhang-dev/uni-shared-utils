@@ -5,7 +5,7 @@ import { GlobalConfiguration } from '../../../definition/GlobalConfiguration'
 
 
 @JsonObject('BaseServiceVO')
-export default class BaseServiceVO {
+export class BaseServiceVO {
 
 
     @JsonProperty(GlobalConfiguration.successParamStr, AuthServiceSuccessJsonConverter, true)

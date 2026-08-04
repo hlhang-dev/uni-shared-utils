@@ -2,6 +2,7 @@
 export { StatusNavHeightVO } from './beans/wx/StatusNavHeightVO'
 export { JsApiPaymentDTO }   from './beans/payment/JsApiPaymentDTO'
 export { UploadItemDTO }     from './beans/http/dto/UploadItemDTO'
+export { BaseServiceVO }     from './beans/http/vo/BaseServiceVO'
 
 // Http
 export { HttpInit }    from './common/HttpInit'
