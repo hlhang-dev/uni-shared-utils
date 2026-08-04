@@ -141,13 +141,12 @@ export class UniAppManagement {
     public static chooseImage(callback?: (success: boolean, result: UniApp.ChooseImageSuccessCallbackResult) => void,
                               count: number = 9,
                               sizeType: string | string [] = ['original', 'compressed'],
-                              sourceType: string [] = ['album', 'camera'],
-                              crop?: UniApp.ChooseImageCropOptions,
+                              sourceType: string [] = ['album', 'camera']
     ) {
         uni.chooseImage({
             count: count,
             sourceType: sourceType,
-            crop: crop,
+            sizeType: sizeType,
             success: (result) => {
                 if (callback) callback(true, result)
             },
