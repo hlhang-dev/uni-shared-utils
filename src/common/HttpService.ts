@@ -5,10 +5,14 @@ import { LangKey } from '../definition/LangKey'
 import { LangManagement } from '../management/LangManagement'
 import { ShowNoticeManagement } from '../management/ShowNoticeManagement'
 import { LoginManagement } from '../management/LoginManagement'
-import { UniAppManagement } from '../management/UniAppManagement'
+import { ChunkedRequestTask, UniAppManagement } from '../management/UniAppManagement'
 import { PageManagement } from '../management/PageManagement'
 import MyResponseCodeEnum from '../definition/http/MyResponseCodeEnum'
 import { ShowModelCodeEnum } from '../definition/http/ShowModelCodeEnum'
+
+export type HttpRequestPromise = Promise<ApiUnifiedVO> & {
+  requestTask: ChunkedRequestTask
+}
 
 export class HttpService {
   private static SERVER_API_TIMEOUT: number = 0
@@ -46,11 +50,13 @@ export class HttpService {
       method: string,
       data: object = {},
       headers?: object,
-      showLoading = true
-  ): Promise<ApiUnifiedVO> {
+      showLoading = true,
+      enableChunked?: boolean
+  ): HttpRequestPromise {
     HttpService.callback(data)
-    return new Promise<ApiUnifiedVO>((resolve, reject) => {
-      UniAppManagement.wxRequest(url, method, data, HttpService.SERVER_API_TIMEOUT, (responseCodeEnum: MyResponseCodeEnum, result?: ApiUnifiedVO) => {
+    let requestTask: ChunkedRequestTask
+    const promise = new Promise<ApiUnifiedVO>((resolve, reject) => {
+      requestTask = UniAppManagement.wxRequest(url, method, data, HttpService.SERVER_API_TIMEOUT, (responseCodeEnum: MyResponseCodeEnum, result?: ApiUnifiedVO) => {
         switch (responseCodeEnum) {
           case MyResponseCodeEnum.SUCCESS:
             if (result) {
@@ -63,8 +69,9 @@ export class HttpService {
             reject()
             break
         }
-      }, headers, this.IS_SHOW_LOADING ? showLoading: false,HttpService.HEADER)
+      }, headers, this.IS_SHOW_LOADING ? showLoading: false,HttpService.HEADER, enableChunked)
     })
+    return Object.assign(promise, {requestTask: requestTask!})
   }
 
   private static onHttpCodeChange(msg: string, code: string) {

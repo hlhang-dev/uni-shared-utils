@@ -15,18 +15,28 @@ import {RequestPaymentCode} from '../definition/coomon/RequestPaymentCode'
 import {MyJsonConverter} from 'ts-dev-common-utils'
 import {ShowNoticeManagement} from './ShowNoticeManagement'
 
+export interface ChunkedRequestResult {
+    data: ArrayBuffer
+}
+
+export interface ChunkedRequestTask extends UniNamespace.RequestTask {
+    onChunkReceived(callback: (result: ChunkedRequestResult) => void): void
+    offChunkReceived(callback: (result: ChunkedRequestResult) => void): void
+}
+
 export class UniAppManagement {
-    public static wxRequest<T>(url: string, method: string, data: object, timeout: number, callback: (requestCode: MyResponseCodeEnum, result?: ApiUnifiedVO) => void, headers: object = {}, showLoading: boolean = true, globalHeaders: object = {}) {
+    public static wxRequest<T>(url: string, method: string, data: object, timeout: number, callback: (requestCode: MyResponseCodeEnum, result?: ApiUnifiedVO) => void, headers: object = {}, showLoading: boolean = true, globalHeaders: object = {}, enableChunked?: boolean): ChunkedRequestTask {
         if (showLoading) {
             LoadingManagement.getInstance().show()
         }
-        uni.request({
+        return uni.request({
             url: url,
             method: <'OPTIONS' | 'GET' | 'HEAD' | 'POST' | 'PUT' | 'DELETE' | 'TRACE' | 'CONNECT'>method,
             header: UniUtils.buildHeader(headers, globalHeaders),
             data: data,
             sslVerify: false,
             timeout: timeout,
+            ...(enableChunked === undefined ? {} : {enableChunked}),
             success: (res) => {
                 if (UniAppManagement.isApp()) {
                     res.data = JSON.parse(JSON.stringify(res.data))
@@ -44,7 +54,7 @@ export class UniAppManagement {
                 }
                 callback(MyResponseCodeEnum.COMPLETE)
             }
-        })
+        }) as ChunkedRequestTask
     }
 
     public static hideSystemTabBar(animation: boolean = false) {

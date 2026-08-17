@@ -16,6 +16,8 @@ export { UniErrorMsgEnum } from './definition/msg/UniErrorMsgEnum'
 export { PageManagement }       from './management/PageManagement'
 export { TokenManagement }      from './management/TokenManagement'
 export { UniAppManagement }     from './management/UniAppManagement'
+export type { ChunkedRequestResult, ChunkedRequestTask } from './management/UniAppManagement'
+export type { HttpRequestPromise } from './common/HttpService'
 export { LoadingManagement }    from './management/LoadingManagement'
 export { LoginManagement }      from './management/LoginManagement'
 export { ShowNoticeManagement } from './management/ShowNoticeManagement'
@@ -40,5 +42,4 @@ export { UniMapper } from './mapper/UniMapper'
 
 // decorator
 export { CheckMiniProgramUpdate } from './decorator/mini-program/MiniProgramDecorator'
-
 
