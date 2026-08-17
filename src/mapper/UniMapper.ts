@@ -25,7 +25,7 @@ export  class UniMapper {
     }
 
 
-    public static uploadFile(uploadFileItem: UploadItemDTO, url: string, token: string = '', clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
+    public static uploadFile(uploadFileItem: UploadItemDTO, url: string, formData: object = {},token: string = '', clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         const currentAuthToken = TokenManagement.getInstance().getAccountToken()
         uploadFileItem.id = StringUtils.getRandomStr()
         return new Promise((resolve, reject) => {
@@ -35,6 +35,7 @@ export  class UniMapper {
                     url: url,
                     fileType: fileType,
                     name: key,
+                    formData: formData,
                     header: UniMapper.buildHeader(token || currentAuthToken,clientId),
                     success: result => {
                         uploadFileItem.serverData = result.data
@@ -52,14 +53,14 @@ export  class UniMapper {
         })
     }
 
-    public static uploadFiles(uploadFileList: Array<UploadItemDTO>, url: string, token: string = '',clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
+    public static uploadFiles(uploadFileList: Array<UploadItemDTO>, url: string, formData: object = {},token: string = '',clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
         return new Promise<void>(async (resolve, reject) => {
             let count = 0
             if (ArrayUtils.isNotEmpty(uploadFileList)) {
                 for (let i = 0; i < uploadFileList.length; i++) {
                     const item = uploadFileList[i]
                     try {
-                        await UniMapper.uploadFile(item, url, token, clientId,key, fileType)
+                        await UniMapper.uploadFile(item, url,formData ,token, clientId,key, fileType)
                         count++
                         if (uploadFileList.length === count) {
                             resolve()

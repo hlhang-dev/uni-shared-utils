@@ -362,8 +362,9 @@ export class UniAppManagement {
         })
     }
 
-    public static getLocation(callback: (success: boolean, choose: GetLocationSuccess) => void) {
+    public static getLocation(callback: (success: boolean, choose: GetLocationSuccess) => void,type: string = 'wgs84') {
         uni.getLocation({
+            type: type,
             success: (choose) => {
                 callback(true, choose)
             },
