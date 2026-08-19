@@ -25,7 +25,7 @@ export interface ChunkedRequestTask extends UniNamespace.RequestTask {
 }
 
 export class UniAppManagement {
-    public static wxRequest<T>(url: string, method: string, data: object, timeout: number, callback: (requestCode: MyResponseCodeEnum, result?: ApiUnifiedVO) => void, headers: object = {}, showLoading: boolean = true, globalHeaders: object = {}, enableChunked?: boolean): ChunkedRequestTask {
+    public static wxRequest<T>(url: string, method: string, data: object, timeout: number, callback: (requestCode: MyResponseCodeEnum, result?: ApiUnifiedVO, error?: UniNamespace.GeneralCallbackResult) => void, headers: object = {}, showLoading: boolean = true, globalHeaders: object = {}, enableChunked?: boolean): ChunkedRequestTask {
         if (showLoading) {
             LoadingManagement.getInstance().show()
         }
@@ -45,8 +45,8 @@ export class UniAppManagement {
                 const result = MyJsonConverter.getInstance().deserializeObject(res, ApiUnifiedVO)
                 callback(MyResponseCodeEnum.SUCCESS, result)
             },
-            fail: () => {
-                callback(MyResponseCodeEnum.FAILED)
+            fail: (error) => {
+                callback(MyResponseCodeEnum.FAILED, undefined, error)
             },
             complete: () => {
                 if (showLoading) {

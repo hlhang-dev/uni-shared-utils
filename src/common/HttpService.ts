@@ -51,22 +51,25 @@ export class HttpService {
       data: object = {},
       headers?: object,
       showLoading = true,
-      enableChunked?: boolean
+      enableChunked?: boolean,
+      showErrorNotice = true
   ): HttpRequestPromise {
     HttpService.callback(data)
     let requestTask: ChunkedRequestTask
     const promise = new Promise<ApiUnifiedVO>((resolve, reject) => {
-      requestTask = UniAppManagement.wxRequest(url, method, data, HttpService.SERVER_API_TIMEOUT, (responseCodeEnum: MyResponseCodeEnum, result?: ApiUnifiedVO) => {
+      requestTask = UniAppManagement.wxRequest(url, method, data, HttpService.SERVER_API_TIMEOUT, (responseCodeEnum: MyResponseCodeEnum, result?: ApiUnifiedVO, error?: UniNamespace.GeneralCallbackResult) => {
         switch (responseCodeEnum) {
           case MyResponseCodeEnum.SUCCESS:
             if (result) {
-              HttpService.onHttpCodeChange(result.data.msg,result.data.code)
+              HttpService.onHttpCodeChange(result.data.msg,result.data.code, showErrorNotice)
               resolve(result)
             }
             break
           case MyResponseCodeEnum.FAILED:
-            ShowNoticeManagement.showNormalNotice(LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
-            reject()
+            if (showErrorNotice && !HttpService.isAbortError(error)) {
+              ShowNoticeManagement.showNormalNotice(LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
+            }
+            reject(error)
             break
         }
       }, headers, this.IS_SHOW_LOADING ? showLoading: false,HttpService.HEADER, enableChunked)
@@ -74,13 +77,19 @@ export class HttpService {
     return Object.assign(promise, {requestTask: requestTask!})
   }
 
-  private static onHttpCodeChange(msg: string, code: string) {
+  private static isAbortError(error?: UniNamespace.GeneralCallbackResult) {
+    return error?.errMsg?.toLowerCase().includes('abort') === true
+  }
+
+  private static onHttpCodeChange(msg: string, code: string, showErrorNotice: boolean) {
     switch (code) {
       case HttpStatusCode.NO_PERMISSION:
         HttpService.onNoPermission()
         break
       case HttpStatusCode.FAILED:
-        ShowNoticeManagement.showNormalNotice(msg || LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
+        if (showErrorNotice) {
+          ShowNoticeManagement.showNormalNotice(msg || LangManagement.getInstance().t(LangKey.PLEASE_CONTACT_THE_ADMINISTRATOR))
+        }
         break
       default:
         break
