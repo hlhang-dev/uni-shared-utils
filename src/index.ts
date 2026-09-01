@@ -9,6 +9,7 @@ export { HttpInit }    from './common/HttpInit'
 export { HttpService } from './common/HttpService'
 export { UniUtils }    from './common/UniUtils'
 export { PageInit }    from './common/PageInit'
+export { UniInit }     from './common/UniInit'
 
 // Enum
 export { UniErrorMsgEnum } from './definition/msg/UniErrorMsgEnum'

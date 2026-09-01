@@ -153,6 +153,26 @@ LangManagement.getInstance().setCustomLangPack({
 
 
 
+### UniInit 初始化 UniApp 全局配置
+
+| methods | type | remark |
+| ------: | :--: | ------ |
+|    init | void | 初始化主题色 |
+
+##### init 参数
+
+|      param |  type  | remark                    | 选填 |
+| ---------: | :----: | ------------------------- | ---- |
+| themeColor | string | 主题色；未初始化时使用各平台官方默认色 | 否   |
+
+```ts
+UniInit.getInstance().init('#2979FF')
+
+const themeColor = UniInit.getInstance().themeColor
+```
+
+
+
 ### UniMapper
 
 |     methods |     type      | remark       |
@@ -223,4 +243,3 @@ LangManagement.getInstance().setCustomLangPack({
 | contentType | string | 数据类型    |
 |        date | string | 时间        |
 |      server | string | server name |
-

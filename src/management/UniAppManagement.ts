@@ -14,6 +14,7 @@ import {UniErrorMsgEnum} from '../definition/msg/UniErrorMsgEnum'
 import {RequestPaymentCode} from '../definition/coomon/RequestPaymentCode'
 import {MyJsonConverter} from 'ts-dev-common-utils'
 import {ShowNoticeManagement} from './ShowNoticeManagement'
+import {GlobalConfiguration} from '../definition/GlobalConfiguration'
 
 export interface ChunkedRequestResult {
     data: ArrayBuffer
@@ -86,6 +87,7 @@ export class UniAppManagement {
         uni.showActionSheet({
             itemList: itemList,
             title: title,
+            ...(GlobalConfiguration.themeColor ? {itemColor: GlobalConfiguration.themeColor} : {}),
             success: (result) => {
                 callback(true, result.tapIndex)
             },
@@ -400,6 +402,7 @@ export class UniAppManagement {
                 title: title,
                 content: content,
                 showCancel: showCancel,
+                ...(GlobalConfiguration.themeColor ? {confirmColor: GlobalConfiguration.themeColor} : {}),
                 success: (result) => {
                     let code: ShowModelCodeEnum
                     if (result.confirm) {
