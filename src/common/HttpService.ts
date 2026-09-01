@@ -21,13 +21,17 @@ export class HttpService {
 
   private static LOGIN_PAGE = ''
 
+  private static  CANCEL_BACK_PAGE = ''
+
+  private static  FORCE_LOGIN = false
+
   private static IS_SHOW_LOADING = false
 
   private static HEADER = {}
 
   private static callback: (data: object) => void
 
-  public static init(loginPage: string, timeout: number, header: object = {},isShowLoading: boolean,callback: (data: object) => void) {
+  public static init(loginPage: string, timeout: number, header: object = {},isShowLoading: boolean,forceLogin: boolean,cancelBackPage: string,callback: (data: object) => void) {
     console.log( '%c\n' +
         '%c _   _ _   _                             _            _____      _ _   %c\n' +
         '%c | | | | | | |                           (_)          |_   _|    (_) |  %c\n' +
@@ -42,6 +46,8 @@ export class HttpService {
     this.LOGIN_PAGE = loginPage
     this.IS_SHOW_LOADING = isShowLoading
     this.HEADER  = header
+    this.FORCE_LOGIN = forceLogin
+    this.CANCEL_BACK_PAGE = cancelBackPage
     this.callback = callback
   }
 
@@ -108,12 +114,20 @@ export class HttpService {
       const langMgr = LangManagement.getInstance()
       const title: string = LoginManagement.getInstance().isAccountLogin() ? langMgr.t(LangKey.LOGIN_BE_OVERDUE_NOTICE): langMgr.t(LangKey.LOGIN_NOTICE)
       const content: string = LoginManagement.getInstance().isAccountLogin() ? langMgr.t(LangKey.LOGIN_BE_OVERDUE): langMgr.t(LangKey.NOT_LOGGED_IN)
-      UniAppManagement.doShowModal(title, content, false, HttpService.onLoginBeOverdueCallback)
+      UniAppManagement.doShowModal(title, content, !HttpService.FORCE_LOGIN, HttpService.onLoginBeOverdueCallback)
     }
   }
 
-  private static onLoginBeOverdueCallback () {
-    PageManagement.navigateToPage(HttpService.LOGIN_PAGE, undefined, HttpService.onMoveToLoginPageSuccess)
+  private static onLoginBeOverdueCallback (code: ShowModelCodeEnum) {
+      switch (code) {
+          case ShowModelCodeEnum.SUCCESS:
+          case ShowModelCodeEnum.FAILED:
+              PageManagement.navigateToPage(HttpService.LOGIN_PAGE, undefined, HttpService.onMoveToLoginPageSuccess)
+              break
+          case ShowModelCodeEnum.CANCEL:
+              PageManagement.navigateToPage(HttpService.CANCEL_BACK_PAGE, undefined, HttpService.onMoveToLoginPageSuccess)
+              break
+      }
   }
 
   private static onMoveToLoginPageSuccess() {

@@ -21,12 +21,14 @@ export class HttpInit {
          successParamStr: string = 'code',
          serverMessageParamStr: string = 'msg',
          isShowLoading: boolean = true,
+         forceLogin: boolean = true,
+         cancelBackPage: string = '',
          callback: (data: any) => void = (object: any) => {
          }) {
         GlobalConfiguration.successParamStr = successParamStr
         GlobalConfiguration.serverMessageParamStr = serverMessageParamStr
         GlobalConfiguration.codeParamStr = codeParamStr
         AuthServiceSuccessJsonConverter.successCode = successCode
-        HttpService.init(loginPage, timeout, header, isShowLoading, callback)
+        HttpService.init(loginPage, timeout, header, isShowLoading,forceLogin,cancelBackPage ,callback)
     }
 }

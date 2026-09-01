@@ -36,7 +36,7 @@ export class PageManagement {
       PageManagement.checkTabBarPath(page)
       uni.navigateTo({
             url: page + BrowserUtils.objToUrlParam(params),
-            success: (result) => {
+            complete (result) {
                 if (callback) {
                     callback(result)
                 }
