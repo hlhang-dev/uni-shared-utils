@@ -1,32 +1,21 @@
 import { UploadItemDTO } from '../beans/http/dto/UploadItemDTO'
-import { TokenManagement } from '../management/TokenManagement'
+import { UniUtils } from '../common/UniUtils'
 import { ArrayUtils,StringUtils } from 'ts-dev-common-utils'
 
 
 export  class UniMapper {
 
-    private static readonly ACCOUNT_AUTH_TOKEN_HEADER: string = 'Authorization'
-
-
-    private static readonly ACCOUNT_AUTH_TOKEN_PREFIX: string = 'Bearer '
-
     private static readonly ACCOUNT_CLIENT_ID_HEADER: string = 'clientId'
 
-    private static buildHeader(token: string | undefined,clientId?: string): Object {
-        const result: any = {}
-
-        if (token) {
-            result[UniMapper.ACCOUNT_AUTH_TOKEN_HEADER] = UniMapper.ACCOUNT_AUTH_TOKEN_PREFIX + token
-        }
+    private static buildHeader(token?: string, clientId?: string): Record<string, string> {
+        const headers = UniUtils.buildTokenHeader(token)
         if (clientId) {
-            result[UniMapper.ACCOUNT_CLIENT_ID_HEADER] = clientId
+            headers[UniMapper.ACCOUNT_CLIENT_ID_HEADER] = clientId
         }
-        return result
+        return headers
     }
 
-
     public static uploadFile(uploadFileItem: UploadItemDTO, url: string, formData: object = {},token: string = '', clientId?: string,key: string = 'file', fileType: 'image' | 'video' | 'audio' | undefined = 'image') {
-        const currentAuthToken = TokenManagement.getInstance().getAccountToken()
         uploadFileItem.id = StringUtils.getRandomStr()
         return new Promise((resolve, reject) => {
             if (!uploadFileItem.isUpload) {
@@ -36,7 +25,7 @@ export  class UniMapper {
                     fileType: fileType,
                     name: key,
                     formData: formData,
-                    header: UniMapper.buildHeader(token || currentAuthToken,clientId),
+                    header: UniMapper.buildHeader(token || undefined, clientId),
                     success: result => {
                         uploadFileItem.serverData = result.data
                         uploadFileItem.isUpload = true

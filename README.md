@@ -97,6 +97,14 @@ LangManagement.getInstance().setCustomLangPack({
 
 ### HttpInit(全局网络请求初始化)
 
+默认请求与上传都发送 `Authorization: Bearer <token>`。如后端使用自定义头，在应用启动时配置一次：
+
+```ts
+HttpInit.getInstance().configureTokenHeader('Authori-zation', '')
+```
+
+库在每次请求与上传时从 `TokenManagement` 读取当前令牌，未登录时不发送令牌头。上传仍支持显式传入令牌。
+
 | methods | type | remark     |
 | ------: | :--: | ---------- |
 |    init | void | 初始化方法 |

@@ -13,6 +13,12 @@ export class HttpInit {
         return this._instance
     }
 
+    /** 配置请求与上传使用的令牌头。传入空前缀时发送原始令牌。 */
+    configureTokenHeader(name: string, prefix: string = ''): void {
+        GlobalConfiguration.tokenHeaderName = name
+        GlobalConfiguration.tokenHeaderPrefix = prefix
+    }
+
     init(loginPage: string,
          timeout: number = 30000,
          header: object = {},

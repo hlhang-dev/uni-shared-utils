@@ -1,33 +1,22 @@
 import { TokenManagement } from '../management/TokenManagement'
-import TokenConstant from '../definition/token/TokenConstant'
+import { GlobalConfiguration } from '../definition/GlobalConfiguration'
 
 class UniUtils {
-  public static buildHeader(headers?: object,globalHeaders?: object): Object {
-    const result: any = {}
-
-    const token = TokenManagement.getInstance().getAccountToken()
-    if (token) {
-      result[TokenConstant.ACCOUNT_AUTH_TOKEN_HEADER] = TokenConstant.ACCOUNT_AUTH_TOKEN_PREFIX + token
+  public static buildTokenHeader(token = TokenManagement.getInstance().getAccountToken()): Record<string, string> {
+    if (!token) {
+      return {}
     }
-
-    if (globalHeaders) {
-      for (const key of Object.keys(globalHeaders)) {
-        if (globalHeaders.hasOwnProperty(key)) {
-          // @ts-ignore
-          result[key] = globalHeaders[key]
-        }
-      }
+    return {
+      [GlobalConfiguration.tokenHeaderName]: GlobalConfiguration.tokenHeaderPrefix + token
     }
+  }
 
-    if (headers) {
-      for (const key of Object.keys(headers)) {
-        if (headers.hasOwnProperty(key)) {
-          // @ts-ignore
-          result[key] = headers[key]
-        }
-      }
+  public static buildHeader(headers?: object, globalHeaders?: object): object {
+    return {
+      ...UniUtils.buildTokenHeader(),
+      ...globalHeaders,
+      ...headers
     }
-    return result
   }
 
   public static getDomHeight(domClass: string, vueInstance: any) {
